@@ -1,6 +1,7 @@
 import './App.css';
-import {useState} from 'react'
-import React, { Component }  from 'react';
+// import {useState} from 'react'
+import React, { useState , Component }  from 'react';
+
 function App() {
   const [ToDos,setToDos] = useState([]);
   const [ToDo,setToDo] = useState('')
@@ -9,10 +10,19 @@ function App() {
     newToDos.splice(key,1);
     setToDos(newToDos)
    };
+
+  //  Display day in h1
+
    const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
     const d = new Date();
     let day = weekday[d.getDay()];
+
+    const displayToDo=()=>{
+      setToDos([...ToDos,{id:Date.now() ,text: ToDo, status: false}]);
+      setToDo("");
+    }
+
   return (
     <div className="app">
       <div className="mainHeading">
@@ -25,7 +35,7 @@ function App() {
       </div>
       <div className="input">
         <input value={ToDo} onChange={(e)=>setToDo(e.target.value)} type="text" placeholder="🖊️ Add item..." />
-        <i className="fas fa-plus" onClick={()=>setToDos([...ToDos,{id:Date.now() ,text: ToDo, status: false}],)} ></i>
+        <i className="fas fa-plus" onClick={()=>displayToDo()} ></i>
       </div>
       <div className="todos">
         { ToDos.map((obj ,index)=>{
@@ -52,7 +62,7 @@ function App() {
         }
         <div className='task-display'>
           <div className='progress'>
-            <h1>In Progress</h1>
+            <h2>Progress</h2>
             {ToDos.map((obj)=>{
               if(!obj.status){
                 return(
@@ -65,7 +75,7 @@ function App() {
             })}
           </div>
           <div className='completed'>
-            <h1>Completed</h1>
+            <h2>Completed</h2>
             {ToDos.map((obj)=>{
               if(obj.status){
                 return(
