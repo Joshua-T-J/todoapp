@@ -1,8 +1,29 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import "./Todo.css";
 
+// localStorage implementation
+
 export default function Todo() {
-  const [ToDos, setToDos] = useState([]);
+  const [ToDos, setToDos] = useState(() => {
+    // get the todos from localstorage
+    const savedTodos = localStorage.getItem("todos");
+    // if there are todos stored
+    if (savedTodos) {
+      // return the parsed the JSON object back to a javascript object
+      return JSON.parse(savedTodos);
+      // otherwise
+    } else {
+      // return an empty array
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    
+    localStorage.setItem("todos", JSON.stringify(ToDos));
+    
+  }, [ToDos]);
+  
   const [ToDo, setToDo] = useState("");
   const handleRemoveItem = (key) => {
     const newToDos = [...ToDos];
@@ -26,14 +47,16 @@ export default function Todo() {
   let day = weekday[d.getDay()];
 
   const displayToDo = () => {
-    setToDos([...ToDos, { id: Date.now(), text: ToDo, status: false }]);
-    setToDo("");
+    if(ToDo){
+      setToDos([...ToDos, { id: Date.now(), text: ToDo, status: false }]);
+      setToDo("");
+    }
   };
 
   return (
     <div className="app">
       <div className="mainHeading">
-        <h1>ToDo List</h1>
+        <h1>ToDo List &nbsp;<i className="fa-solid fa-clipboard-list"></i></h1>
       </div>
       <div className="subHeading">
         <br />
@@ -81,32 +104,34 @@ export default function Todo() {
           );
         })}
         <div className="task-display">
-          <div className="progress">
-            <h2>Progress</h2>
-            {ToDos.map((obj) => {
-              if (!obj.status) {
-                return (
-                  <div>
-                    <h3 className="task">{obj.text}</h3>
-                  </div>
-                );
+          <table>
+            <tbody>
+              <tr>              
+                <th className="progress">Progress</th>
+                <th className="completed">Completed</th>
+              </tr>
+              {ToDos.map((obj) => {
+                if (obj.status) {
+                  return (
+                    <tr>
+                      <td></td>
+                      <td className="completed">{obj.text}</td>
+                    </tr>
+                  );
+                }else{
+                  return(
+                  <tr>
+                    <td className="progress">{obj.text}</td>
+                    <td></td>
+                  </tr>
+                  );
+                }
+                })
               }
-              return null;
-            })}
-          </div>
-          <div className="completed">
-            <h2>Completed</h2>
-            {ToDos.map((obj) => {
-              if (obj.status) {
-                return (
-                  <div>
-                    <h3 className="task">{obj.text}</h3>
-                  </div>
-                );
-              }
-              return null;
-            })}
-          </div>
+
+            </tbody>
+          </table>
+
         </div>
       </div>
     </div>

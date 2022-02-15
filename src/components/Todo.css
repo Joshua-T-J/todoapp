@@ -5,7 +5,7 @@
     transform: translate(-50%, -10%);
   }
   
-  .app .mainHeading h1 {
+  .app .mainHeading h1{
     text-align: center;
   }
   
@@ -30,6 +30,11 @@
     align-items: center;
     border-radius: 6px;
     padding: 5px;
+    width: 20rem;
+  }
+
+  .app .fa-clipboard-list{
+    color: #fd0;
   }
   
   .app .input input {
@@ -55,7 +60,7 @@
   }
   .app .todos .todo {
     margin-top: 0.8em;
-    width: 20em;
+    width: 20rem;
     height: 2em;
     background-color: white;
     display: flex;
@@ -78,25 +83,30 @@
     color: grey;
   }
   
-  .task-display{
-    display: flex;
-    justify-items: center;
-    align-items: center;
+  .app .task-display{
     margin-top: 5rem;
   }
-  
-  .progress{
-    margin-right: 20px;
-    padding-right: 20px;
-    justify-content: space-between;
-    border-right: 1px solid #fff;
-  }
-  
-  .task{
-    padding-top: 20px;
+
+  .app table{    
     color: #fff;
-    text-align: center;
+    border-collapse: collapse;
   }
+
+  .app table tbody th{
+    font-size: 25px;
+    padding-bottom: 15px;
+  }
+  
+  .app table .progress{
+    padding-right: 2rem;
+    border-right: 2px solid #fff;
+  }
+
+  .app table .completed{
+    padding-left: 2rem;
+    border-left: 2px solid #fff;
+  }
+  
   
   .app .todos .todo .left .strike {
       text-decoration: line-through;
